@@ -1,8 +1,7 @@
 from urllib.parse import unquote
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pykospacing import spacing
-
-import time
+import requests #for pushqueue
 
 hostName = "localhost"
 serverPort = 3030
@@ -38,6 +37,14 @@ class MyServer(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Origin', 'localhost')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
+
+    def sendPushQueue(self, str):
+        resp = requests.post('http://push.doday.net/api/push',data={
+            'uuid': 'c536828639502673',
+            'secret_key': 'blxw8tmBSS',
+            'code': 'eqqui000',
+            'body': str
+        })
 
 
 if __name__ == "__main__":
